@@ -34,65 +34,36 @@ fs.readFile(filename, "utf8", function(err, data) {
 	const input = data.split("\n");
 	console.log("ARRAY: ", input);
 
-	const item0 = [];
-	const item1 = [];
-	const item2 = [];
-	const item3 = [];
-	const item4 = [];
+	const items = [];
 
 	input.forEach((line) => {
 		const lineSplit = line.split("");
 
 		lineSplit.map((el, index) => {
-			if (index === 0) item0.push(el);
-			if (index === 1) item1.push(el);
-			if (index === 2) item2.push(el);
-			if (index === 3) item3.push(el);
-			if (index === 4) item4.push(el);
-			// console.log(el, index);
+			if (!items[index]) items[index] = [];
+			items[index].push(el);
 		});
 	});
 
-	const gammaBinary =
-		(item0.filter((x) => x == 1).length > item0.filter((x) => x == 0).length
-			? 1
-			: 0) +
-		"" +
-		(item1.filter((x) => x == 1).length > item1.filter((x) => x == 0).length
-			? 1
-			: 0) +
-		"" +
-		(item2.filter((x) => x == 1).length > item2.filter((x) => x == 0).length
-			? 1
-			: 0) +
-		"" +
-		(item3.filter((x) => x == 1).length > item3.filter((x) => x == 0).length
-			? 1
-			: 0) +
-		"" +
-		(item4.filter((x) => x == 1).length > item4.filter((x) => x == 0).length
-			? 1
-			: 0);
-	const epsilonBinary =
-		(item0.filter((x) => x == 1).length > item0.filter((x) => x == 0).length
-			? 0
-			: 1) +
-		"" +
-		(item1.filter((x) => x == 1).length > item1.filter((x) => x == 0).length
-			? 0
-			: 1) +
-		"" +
-		(item2.filter((x) => x == 1).length > item2.filter((x) => x == 0).length
-			? 0
-			: 1) +
-		"" +
-		(item3.filter((x) => x == 1).length > item3.filter((x) => x == 0).length
-			? 0
-			: 1) +
-		"" +
-		(item4.filter((x) => x == 1).length > item4.filter((x) => x == 0).length
-			? 0
-			: 1);
+	console.log(items);
+
+	let gammaBinary = "";
+	items.forEach((el, index) => {
+		gammaBinary +=
+			"" + el.filter((x) => x == 1).length >
+			el.filter((x) => x == 0).length
+				? 1
+				: 0;
+	});
+
+	let epsilonBinary = "";
+	items.forEach((el, index) => {
+		epsilonBinary +=
+			"" + el.filter((x) => x == 1).length >
+			el.filter((x) => x == 0).length
+				? 0
+				: 1;
+	});
 
 	console.log("GAMMA", gammaBinary);
 	parameters.a.gamma = parseInt(gammaBinary, 2);
